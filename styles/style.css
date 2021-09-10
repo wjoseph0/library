@@ -1,0 +1,48 @@
+body {
+	background-color: #f2ebeb;
+}
+
+#books-container {
+  margin: 20px;
+	background-color: inherit;
+	height: auto;
+  width: 100vw - margin;
+  max-height: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.book {
+  background-color: lightcoral;
+  height: 50px;
+  text-align: center;
+}
+
+#form-container {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  max-height: 100%;
+  max-width: 100%;
+  background-color: #f2ebeb;
+  display: grid;
+  row-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+  /* align-items: center; */ 
+}
+
+#form-container div, #form-container button {
+  font-family: monospace;
+  font-size: 30px;
+}
+
+.form-labels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
