@@ -1,5 +1,30 @@
+header {
+  height: 12vh;
+  width: 100%;
+  background-color: #dddddd;
+  font-size: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top:0;
+  position: sticky;
+}
+
 body {
-	background-color: #f2ebeb;
+	background-color: #eeeeee;
+}
+
+#title {
+  margin-left: 10px;
+}
+
+#add-book-button {
+  height: 6vh;
+  background-color: #90ee90;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  padding: 0px 20px 0px 20px;
 }
 
 #books-container {
@@ -11,13 +36,33 @@ body {
   max-width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .book {
-  background-color: lightcoral;
-  height: 50px;
+  background-color: #dddddd;
+  border: solid black 2px;
+  height: 40vh;
   text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5fr 1fr;
+  border-radius: 10px;
+}
+
+#bookObjInfoDiv {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  font-size: 24px;
+}
+
+#bookObjButtonsDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 0;
 }
 
 #form-container {
@@ -27,13 +72,12 @@ body {
   width: 100vw;
   max-height: 100%;
   max-width: 100%;
-  background-color: #f2ebeb;
+  background-color: #eeeeee;
   display: grid;
   row-gap: 20px;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 0.5fr;
   text-align: center;
-  /* align-items: center; */ 
 }
 
 #form-container div, #form-container button {

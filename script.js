@@ -4,11 +4,18 @@ function Book(title, author, pages, read) {
   this.title = title,
   this.author = author,
   this.pages = pages,
-  this.read = read,
-  this.info = function() {
-    return `${title} by ${author}, ${pages} pages, ${read}`
-  }
+  this.read = read
 }
+
+Book.prototype.toggleRead = function() {
+  if (this.read === false) {
+    this.read = true;
+  }
+
+  else if (this.read === true) {
+    this.read = false;
+  }
+};
 
 function addBookToLibrary(title, author, pages, read) {
   let newBook = new Book(title, author, pages, read);
@@ -18,96 +25,153 @@ function addBookToLibrary(title, author, pages, read) {
 function displayMyLibrary() {
   const booksContainer = document.querySelector("#books-container");
   
-  if(myLibrary.length === 0) booksContainer.textContent = "No books yet!";
+  if(myLibrary.length === 0) {
+    booksContainer.textContent = "No books yet!";
+  }
   else {booksContainer.textContent = ""}
 
+  let index = 0;
   myLibrary.forEach(bookObj => {
     let bookDiv = document.createElement("div");
-    bookDiv.textContent = bookObj.info();
     bookDiv.classList.add("book");
+
+    let bookInfoDiv = document.createElement("div");
+    bookInfoDiv.id = "bookObjInfoDiv";
+    let bookTitle = document.createElement("p");
+    bookTitle.textContent = `"${bookObj.title}"`;
+    bookInfoDiv.appendChild(bookTitle);
+
+    let bookAuthor = document.createElement("p");
+    bookAuthor.textContent = bookObj.author;
+    bookInfoDiv.appendChild(bookAuthor);
+
+    let bookPages = document.createElement("p");
+    bookPages.textContent = `${bookObj.pages} pages`;
+    bookInfoDiv.appendChild(bookPages);
+
+    bookDiv.appendChild(bookInfoDiv);
+
+
+    let buttonsDiv = document.createElement("div");
+    buttonsDiv.id = "bookObjButtonsDiv";
+
+    let readButton = document.createElement("button");
+    readButton.textContent = "NOT READ";
+    readButton.style.backgroundColor = "orange";
+    readButton.style.border = "none";
+    readButton.style.borderRadius = "10px";
+    readButton.style.fontSize = "16px";
+
+    let delButton = document.createElement("button");
+    delButton.textContent = "x";
+    delButton.id = index;
+    delButton.style.fontSize = "26px";
+    delButton.style.border = "none";
+    delButton.style.borderRadius = "10px";
+    delButton.style.backgroundColor = "pink";
+
+    buttonsDiv.appendChild(readButton);
+    buttonsDiv.appendChild(delButton);
+    bookDiv.appendChild(buttonsDiv);
+
     booksContainer.appendChild(bookDiv);
+    index++;
+
+    readButton.addEventListener("click", () => {
+      bookObj.toggleRead();
+      if (bookObj.read === false) {
+        readButton.style.backgroundColor = "orange";
+        readButton.textContent = "NOT READ";
+        readButton.style.fontSize = "16px";
+      }
+      else if (bookObj.read === true) {
+        readButton.style.backgroundColor = "#90ee90";
+        readButton.textContent = "READ";
+        readButton.style.fontSize = "16px";
+      }
+    });
+
+    delButton.addEventListener("click", () => {
+      myLibrary.splice(delButton.id, 1);
+      displayMyLibrary();
+    });
   })
 }
 
 function showForm() {
   const body = document.querySelector("body");
 
-  let formContainer = document.createElement("div")
+  let formContainer = document.createElement("form")
   formContainer.id = "form-container";
 
-  // let titleContainer = document.createElement("div");
-  // titleContainer.classList.add("form-section-container");
+
   let titleLabelContainer = document.createElement("div");
   titleLabelContainer.classList.add("form-labels");
   let titleLabel = document.createElement("div");
   titleLabel.textContent = "Title:";
   let titleInput = document.createElement("input");
   titleInput.id = "title-input";
+  titleInput.required = true;
+  titleInput.style.margin = "20px 20px 20px 0px";
+  titleInput.style.textAlign = "center";
+  titleInput.style.fontSize = "24px";
   titleLabelContainer.appendChild(titleLabel);
   formContainer.appendChild(titleLabelContainer);
   formContainer.appendChild(titleInput);
-  // formContainer.appendChild(titleContainer);
+  
 
-  // let authorContainer = document.createElement("div")
-  // authorContainer.classList.add("form-section-container");
   let authorLabelContainer = document.createElement("div");
   authorLabelContainer.classList.add("form-labels");
   let authorLabel = document.createElement("div");
   authorLabel.textContent = "Author:";
   let authorInput = document.createElement("input");
+  authorInput.required = true;
+  authorInput.style.margin = "20px 20px 20px 0px";
+  authorInput.style.textAlign = "center";
+  authorInput.style.fontSize = "24px";
   authorLabelContainer.appendChild(authorLabel);
   formContainer.appendChild(authorLabelContainer);
   formContainer.appendChild(authorInput);
-  // formContainer.appendChild(authorContainer);
+  
 
-  // let pagesContainer = document.createElement("div");
-  // pagesContainer.classList.add("form-section-container");
   let pagesLabelContainer = document.createElement("div");
   pagesLabelContainer.classList.add("form-labels");
   let pagesLabel = document.createElement("div");
   pagesLabel.textContent = "Pages:";
   let pagesInput = document.createElement("input");
   pagesInput.setAttribute("type", "number")
+  pagesInput.required = true;
+  pagesInput.style.margin = "20px 20px 20px 0px";
+  pagesInput.style.textAlign = "center";
+  pagesInput.style.fontSize = "24px";
   pagesLabelContainer.appendChild(pagesLabel);
   formContainer.appendChild(pagesLabelContainer);
   formContainer.appendChild(pagesInput);
-  // formContainer.appendChild(pagesContainer);
+ 
 
-  // let readContainer = document.createElement("div");
-  // readContainer.classList.add("form-section-container");
-  let readLabelContainer = document.createElement("div");
-  readLabelContainer.classList.add("form-labels");
-  let readLabel = document.createElement("div");
-  readLabel.textContent = "Have you read it?";
-  let readInput = document.createElement("input");
-  readInput.setAttribute("type", "checkbox");
-  readLabelContainer.appendChild(readLabel);
-  formContainer.appendChild(readLabelContainer);
-  formContainer.appendChild(readInput);
-  // formContainer.appendChild(readContainer);
-
-  // let formActionContainer = document.createElement("div");
-  // formActionContainer.style.backgroundColor = "blue";
   let cancelButton = document.createElement("button");
   cancelButton.style.backgroundColor = "pink";
   cancelButton.style.border = "none";
   cancelButton.textContent = "Cancel";
+
+
   let submitButton = document.createElement("button");
+  submitButton.setAttribute("type", "submit");
   submitButton.style.backgroundColor = "lightgreen";
   submitButton.style.border = "none";
   submitButton.textContent = "Add";
   formContainer.appendChild(cancelButton);
   formContainer.appendChild(submitButton);
-  // formContainer.appendChild(formActionContainer)
-
+  
   body.appendChild(formContainer);
+
 
   cancelButton.addEventListener("click", event => {
     body.removeChild(formContainer);
   });
 
-  submitButton.addEventListener("click", () => {
-    addBookToLibrary(titleInput, authorInput, pagesInput, readInput);
+  formContainer.addEventListener("submit", () => {
+    addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, false);
     body.removeChild(formContainer);
     displayMyLibrary();
   });
